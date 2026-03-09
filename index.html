@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lana & Mario | Wedding Celebration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cinzel:wght@400;700&family=Lato:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <style>
+        /* Mobile-First CSS: Base styles for mobile, then enhance for larger screens */
+
+        :root {
+            --primary-color: #000000;
+            --secondary-color: #ffffff;
+            --accent-color: #d4af37; /* Gold for glamour */
+            --font-primary: 'Playfair Display', serif;
+            --font-secondary: 'Cinzel', serif;
+            --font-body: 'Lato', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--primary-color);
+            background-color: var(--secondary-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(255, 255, 255, 0.95);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: var(--font-secondary);
+            font-size: 1.2rem; /* Smaller for mobile */
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: none; /* Hidden on mobile */
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: var(--secondary-color);
+            padding: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-links.active {
+            display: flex;
+        }
+
+        .nav-links li {
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 300;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .hamburger {
+            display: block; /* Visible on mobile */
+            cursor: pointer;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background: var(--primary-color);
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        section {
+            padding: 4rem 5%; /* Reduced padding for mobile */
+            max-width: 1200px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero {
+            height: 80vh; /* Adjusted for mobile */
+            background: url('https://www.lovemydress.net/wp-content/uploads/2017/11/GemmaNick-109.jpg') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: var(--secondary-color);
+            position: relative;
+            padding-top: 60px; /* For fixed header */
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+        }
+
+        .hero h1 {
+            font-family: var(--font-primary);
+            font-size: 3rem; /* Smaller for mobile */
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            margin-top: 1rem;
+            position: relative;
+            z-index: 1;
+            flex-wrap: wrap;
+        }
+
+        .countdown div {
+            margin: 0.5rem;
+            text-align: center;
+        }
+
+        .countdown span {
+            display: block;
+            font-size: 2rem;
+            font-family: var(--font-secondary);
+        }
+
+        h2 {
+            font-family: var(--font-primary);
+            font-size: 2rem; /* Mobile size */
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 2px;
+            background: var(--accent-color);
+            margin: 0.5rem auto 0;
+        }
+
+        .invitation {
+            text-align: center;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Single column on mobile */
+            gap: 2rem;
+        }
+
+        .detail-card {
+            background: #f9f9f9;
+            padding: 1.5rem;
+            text-align: center;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .detail-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .venue {
+            margin-bottom: 3rem;
+        }
+
+        iframe {
+            width: 100%;
+            height: 300px; /* Adjusted for mobile */
+            border: none;
+            margin-top: 1rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+        }
+
+        input, select {
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            font-size: 1rem;
+        }
+
+        button {
+            background: var(--accent-color);
+            color: var(--secondary-color);
+            border: none;
+            padding: 1rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #b9932e;
+        }
+
+        .faq-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .faq-item h4 {
+            font-family: var(--font-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            background: var(--primary-color);
+            color: var(--secondary-color);
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        /* Parallax for hero on larger screens */
+        .hero {
+            background-attachment: scroll; /* Mobile: no parallax for performance */
+        }
+
+        /* Media Queries for Larger Screens */
+        @media (min-width: 768px) {
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            .nav-links {
+                display: flex;
+                flex-direction: row;
+                position: static;
+                width: auto;
+                background: none;
+                padding: 0;
+                box-shadow: none;
+            }
+
+            .nav-links li {
+                margin: 0 1rem;
+            }
+
+            .hamburger {
+                display: none;
+            }
+
+            section {
+                padding: 8rem 5%;
+            }
+
+            .hero {
+                height: 100vh;
+                background-attachment: fixed; /* Parallax on desktop */
+            }
+
+            .hero h1 {
+                font-size: 5rem;
+            }
+
+            .hero p {
+                font-size: 1.5rem;
+            }
+
+            .countdown span {
+                font-size: 3rem;
+            }
+
+            h2 {
+                font-size: 3rem;
+            }
+
+            .details-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            iframe {
+                height: 450px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Lana & Mario</div>
+            <div class="hamburger" onclick="toggleMenu()">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#invitation">Invitation</a></li>
+                <li><a href="#details">Details</a></li>
+                <li><a href="#venues">Venues</a></li>
+                <li><a href="#rsvp">RSVP</a></li>
+                <li><a href="#honeymoon">Honeymoon Fund</a></li>
+                <li><a href="#faq">FAQ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Lana & Mario</h1>
+        <p>11 April 2026 | Cape Town</p>
+        <div class="countdown">
+            <div><span id="days"></span>Days</div>
+            <div><span id="hours"></span>Hours</div>
+            <div><span id="minutes"></span>Minutes</div>
+            <div><span id="seconds"></span>Seconds</div>
+        </div>
+    </section>
+
+    <section id="invitation">
+        <h2>You're Invited</h2>
+        <div class="invitation">
+            <p>With hearts full of joy, we invite you to celebrate the union of Lana and Mario in a day filled with love, elegance, and unforgettable moments.</p>
+            <p><strong>Date:</strong> 11 April 2026</p>
+            <p><strong>Ceremony:</strong> St Paul's Anglican Church, 184 Bree Street, Cape Town | 15:45</p>
+            <p><strong>Soirée:</strong> Just Shift, 54 Shortmarket Street, Cape Town | 17:00</p>
+            <p>Dinner, drinks, and dancing to follow immediately.</p>
+            <p>Kindly RSVP by 31 March 2026.</p>
+        </div>
+    </section>
+
+    <section id="details" style="background: #f9f9f9;">
+        <h2>The Finer Details</h2>
+        <div class="details-grid">
+            <div class="detail-card">
+                <h3>Dress Code</h3>
+                <p>Dolce Vita Black Tie</p>
+                <p>For an afternoon of elegance and bold expression. Embrace a modern, high-fashion take on formal attire, where sophistication meets vibrant contrast. Think luxe fabrics and daring colour blocking.</p>
+            </div>
+            <div class="detail-card">
+                <h3>Festivities</h3>
+                <p>As the night unfolds and the music begins to play, we're trading heels for kicks. Get ready to dance the night away with us!</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="venues">
+        <h2>Our Venues</h2>
+        <div class="venue">
+            <h3>Ceremony: St Paul's Anglican Church</h3>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3311.124077698295!2d18.415032915217!3d-33.921869980642!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc63af62b3c3c3%3A0x658c2b8d797a8972!2sSt%20Paul&#39;s%20Anglican%20Church!5e0!3m2!1sen!2sza!4v1678851234567" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+        <div class="venue">
+            <h3>Soirée: Just Shift</h3>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3311.045678912345!2d18.417123415217!3d-33.923456780641!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc63b012345678%3A0x1234567890abcdef!2s54%20Shortmarket%20St%2C%20Cape%20Town!5e0!3m2!1sen!2sza!4v1678851234567" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </section>
+
+    <section id="rsvp" style="background: #f9f9f9;">
+        <h2>RSVP</h2>
+        <form action="https://formspree.io/f/your-form-id" method="POST">
+            <label>Your Name: <input type="text" name="name" required></label>
+            <label>Number of Guests: <input type="number" name="guests" min="1" required></label>
+            <label>Attending? <select name="attending" required>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select></label>
+            <button type="submit">Send RSVP</button>
+        </form>
+    </section>
+
+    <section id="honeymoon">
+        <h2>Honeymoon Fund</h2>
+        <div class="invitation">
+            <p>Your love, laughter, and company on our wedding day is the greatest gift of all.</p>
+            <p>But if you're considering a gift, we would be honored if you would contribute to our honeymoon fund instead. Then while we're relaxing on the beach or by the pool so blue, we'll sit back and know that it is truly thanks to YOU!</p>
+        </div>
+        <form id="donation-form">
+            <label>First Name: <input type="text" id="name_first" required></label>
+            <label>Last Name: <input type="text" id="name_last" required></label>
+            <label>Email: <input type="email" id="email" required></label>
+            <label>Donation Amount (ZAR): <input type="number" id="amount" min="10" step="0.01" required></label>
+            <button type="submit">Donate Now</button>
+        </form>
+        <p>Alternatively, bank transfer: Bank: Standard Bank, Account Name: Lana & Mario Honeymoon Fund, Account Number: [Your Account], Branch Code: [Your Code]</p>
+    </section>
+
+    <section id="faq" style="background: #f9f9f9;">
+        <h2>FAQ</h2>
+        <div class="faq">
+            <div class="faq-item">
+                <h4>Is there a gift registry?</h4>
+                <p>Yes! <a href="https://www.yuppiechef.com/registry">Yuppiechef</a> (Search for Lana & Mario)</p>
+                <p><a href="https://www.woolworths.co.za/dept/_/N-1z13rkn">Woolworths</a> (Search for our names)</p>
+            </div>
+            <div class="faq-item">
+                <h4>Dietary Options</h4>
+                <p>From starters to sweet endings, everything on our menu is halaal. Vegan options available upon request.</p>
+            </div>
+            <div class="faq-item">
+                <h4>Parking</h4>
+                <p>Parking made easy - street parking available at the respective venues.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Lana & Mario. All rights reserved.</p>
+        <p>QR Code: Scan to visit this site [Generate at qr-code-generator.com with URL: https://lanaandmario.wedding]</p>
+    </footer>
+
+    <script>
+        // Hamburger Menu Toggle
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+            const hamburger = document.querySelector('.hamburger');
+            hamburger.classList.toggle('active'); // Add CSS for animation if desired
+        }
+
+        // Countdown
+        const weddingDate = new Date('2026-04-11T15:45:00');
+        function updateCountdown() {
+            const now = new Date();
+            const diff = weddingDate - now;
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                document.getElementById('days').textContent = days;
+                document.getElementById('hours').textContent = hours;
+                document.getElementById('minutes').textContent = minutes;
+                document.getElementById('seconds').textContent = seconds;
+            } else {
+                document.querySelector('.countdown').textContent = 'The day has arrived!';
+            }
+        }
+        setInterval(updateCountdown, 1000);
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                toggleMenu(); // Close menu on mobile
+            });
+        });
+
+        // Intersection Observer for Section Animations (Seamless "Infinite" Feel)
+        const sections = document.querySelectorAll('section');
+        const observerOptions = {
+            root: null,
+            threshold: 0.1,
+            rootMargin: '0px'
+        };
+        const sectionObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        sections.forEach(section => {
+            sectionObserver.observe(section);
+        });
+
+        // PayFast Donation with CryptoJS for MD5
+        function generateSignature(data, passphrase) {
+            let pfOutput = '';
+            for (let key in data) {
+                if (data.hasOwnProperty(key) && data[key] !== '') {
+                    pfOutput += `${key}=${encodeURIComponent(data[key].trim()).replace(/%20/g, '+')}&`;
+                }
+            }
+            let getString = pfOutput.slice(0, -1);
+            if (passphrase) {
+                getString += `&passphrase=${encodeURIComponent(passphrase.trim()).replace(/%20/g, '+')}`;
+            }
+            return CryptoJS.MD5(getString).toString(CryptoJS.enc.Hex).toLowerCase();
+        }
+
+        document.getElementById('donation-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const amount = document.getElementById('amount').value;
+            const data = {
+                merchant_id: 'YOUR_MERCHANT_ID', // Replace with your PayFast ID
+                merchant_key: 'YOUR_MERCHANT_KEY', // Replace
+                return_url: 'https://your-site.com/thanks',
+                cancel_url: 'https://your-site.com/cancel',
+                notify_url: 'https://your-site.com/notify', // Requires server
+                name_first: document.getElementById('name_first').value,
+                name_last: document.getElementById('name_last').value,
+                email_address: document.getElementById('email').value,
+                m_payment_id: 'DONATION_' + Date.now(),
+                amount: parseFloat(amount).toFixed(2),
+                item_name: 'Honeymoon Fund Donation',
+                item_description: 'Contribution to Lana & Mario\'s Honeymoon',
+                email_confirmation: '1',
+                confirmation_address: document.getElementById('email').value
+            };
+            const passphrase = 'YOUR_PASSPHRASE'; // Set in PayFast dashboard; for security, generate signature server-side
+            data.signature = generateSignature(data, passphrase);
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'https://sandbox.payfast.co.za/eng/process'; // Change to www for live
+            for (let key in data) {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = data[key];
+                form.appendChild(input);
+            }
+            document.body.appendChild(form);
+            form.submit();
+        });
+    </script>
+</body>
+</html>
