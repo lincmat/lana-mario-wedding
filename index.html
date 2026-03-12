@@ -3,195 +3,300 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lana & Mario | Wedding Celebration</title>
+    <title>Mario & Lana | Wedding Celebration</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cinzel:wght@400;700&family=Lato:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
     <style>
         :root {
-            --primary-color: #000000;
-            --secondary-color: #ffffff;
-            --accent-color: #d4af37;
-            --font-primary: 'Playfair Display', serif;
-            --font-secondary: 'Cinzel', serif;
-            --font-body: 'Lato', sans-serif;
+            --primary: #1a1a1a;
+            --accent: #d4af37;
+            --light: #f8f6f3;
+            --font-serif: 'Playfair Display', serif;
+            --font-display: 'Cinzel', serif;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin:0; padding:0; box-sizing:border-box; }
 
         body {
-            font-family: var(--font-body);
-            color: var(--primary-color);
-            background-color: var(--secondary-color);
-            line-height: 1.6;
+            font-family: 'Lato', sans-serif;
+            color: var(--primary);
+            background: var(--light);
+            line-height: 1.75;
             overflow-x: hidden;
         }
 
         header {
             position: fixed;
-            width: 100%;
             top: 0;
-            background: rgba(255, 255, 255, 0.95);
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: 100%;
+            background: rgba(255,255,255,0.96);
+            backdrop-filter: blur(16px);
+            z-index: 9999;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.08);
         }
 
         nav {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1.4rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 5%;
-            max-width: 1200px;
-            margin: 0 auto;
         }
 
-        .logo { font-family: var(--font-secondary); font-size: 1.2rem; }
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.55rem;
+            letter-spacing: 3px;
+            color: var(--primary);
+        }
 
-        .hamburger { display: block; cursor: pointer; }
-        .hamburger div { width: 25px; height: 3px; background: var(--primary-color); margin: 5px; transition: 0.3s; }
+        .hamburger {
+            display: block;
+            cursor: pointer;
+            z-index: 1100;
+        }
+        .hamburger div {
+            width: 28px;
+            height: 2.5px;
+            background: var(--primary);
+            margin: 6px 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .hamburger.active div:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+        .hamburger.active div:nth-child(2) { opacity: 0; }
+        .hamburger.active div:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
         .nav-links {
             display: none;
-            flex-direction: column;
             position: absolute;
             top: 100%;
             left: 0;
             width: 100%;
             background: white;
-            padding: 1rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 2rem 5%;
+            flex-direction: column;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
         }
         .nav-links.active { display: flex; }
 
+        .nav-links a {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 1rem 0;
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--accent); }
+
         section {
-            padding: 4rem 5%;
-            max-width: 1200px;
+            padding: 5.5rem 5% 7rem;
+            max-width: 1280px;
             margin: 0 auto;
             opacity: 0;
-            transform: translateY(50px);
-            transition: all 1s ease;
+            transform: translateY(40px);
+            transition: all 1.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
         section.visible { opacity: 1; transform: translateY(0); }
 
         .hero {
-            height: 85vh;
-            background: url('save-the-date-hero.jpg') no-repeat center center/cover;
+            height: 100vh;
+            min-height: 680px;
+            background: url('save-the-date-hero.jpg') no-repeat center 28% / cover;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            text-align: center;
-            color: var(--secondary-color);
+            justify-content: center;
             position: relative;
-            padding-top: 60px;
+            padding-top: 110px;
         }
 
         .hero::before {
             content: '';
             position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.45);
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.28) 20%, rgba(0,0,0,0.55) 68%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 92%;
         }
 
         .hero h1 {
-            font-family: var(--font-primary);
-            font-size: 3.2rem;
-            margin-bottom: 0.5rem;
-            position: relative;
-            z-index: 2;
+            font-family: var(--font-serif);
+            font-size: clamp(3.2rem, 8vw, 6.8rem);
+            line-height: 1.02;
+            color: white;
+            text-shadow: 0 4px 25px rgba(0,0,0,0.65);
+            margin-bottom: 0.8rem;
         }
 
         .hero p {
-            font-size: 1.3rem;
-            position: relative;
-            z-index: 2;
+            font-size: 1.45rem;
+            color: white;
+            font-weight: 300;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.5);
         }
 
         .countdown {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            margin-top: 1.5rem;
-            position: relative;
-            z-index: 2;
+            gap: 2rem;
+            margin-top: 2.8rem;
         }
-        .countdown div { margin: 0.5rem; text-align: center; }
-        .countdown span { font-size: 2.2rem; font-family: var(--font-secondary); display: block; }
+        .countdown div {
+            text-align: center;
+            min-width: 78px;
+        }
+        .countdown span {
+            font-family: var(--font-display);
+            font-size: 2.65rem;
+            display: block;
+            color: white;
+            line-height: 1;
+        }
+        .countdown small {
+            font-size: 0.88rem;
+            color: rgba(255,255,255,0.85);
+            display: block;
+            margin-top: 4px;
+        }
 
         h2 {
-            font-family: var(--font-primary);
-            font-size: 2.2rem;
+            font-family: var(--font-serif);
+            font-size: 2.65rem;
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
         }
         h2::after {
             content: '';
-            display: block;
-            width: 60px;
-            height: 2px;
-            background: var(--accent-color);
-            margin: 0.8rem auto 0;
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 68px;
+            height: 1.5px;
+            background: var(--accent);
         }
 
-        .invitation { text-align: center; }
-
-        .details-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-        }
-
-        .detail-card {
-            background: #f9f9f9;
-            padding: 1.8rem;
+        .invitation {
             text-align: center;
-            border-radius: 8px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            max-width: 740px;
+            margin: 0 auto;
+            line-height: 1.9;
+        }
+        .invitation p {
+            margin-bottom: 2.6rem;
+            font-size: 1.18rem;
+        }
+        .invitation p:last-child { margin-bottom: 0; }
+
+        .bank-details {
+            background: white;
+            padding: 3rem 2.2rem;
+            border-radius: 16px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.07);
+            max-width: 520px;
+            margin: 3rem auto 0;
+        }
+        .bank-details h3 {
+            font-family: var(--font-display);
+            font-size: 1.95rem;
+            margin-bottom: 1.4rem;
+            color: var(--primary);
         }
 
-        form { display: flex; flex-direction: column; }
-
-        label { margin-bottom: 0.5rem; font-weight: 300; }
+        form {
+            max-width: 460px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.6rem;
+            font-weight: 400;
+        }
         input, select {
-            padding: 0.9rem;
-            margin-bottom: 1.2rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            width: 100%;
+            padding: 1rem 1.2rem;
+            border: 1px solid #e5e0d8;
+            border-radius: 6px;
             font-size: 1rem;
+            margin-bottom: 1.6rem;
+            transition: border 0.3s;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--accent);
         }
 
         button {
-            background: var(--accent-color);
+            background: var(--accent);
             color: white;
             border: none;
-            padding: 1.1rem;
-            font-size: 1.1rem;
+            width: 100%;
+            padding: 1.15rem;
+            font-size: 1.05rem;
+            font-weight: 500;
+            border-radius: 6px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
         }
-        button:hover { background: #b9932e; }
+        button:hover {
+            background: #b38f2e;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(212,175,55,0.3);
+        }
+
+        .detail-card {
+            background: white;
+            padding: 2.4rem 2rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.06);
+            text-align: center;
+        }
+
+        iframe {
+            border-radius: 16px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+        }
 
         footer {
-            background: var(--primary-color);
+            background: var(--primary);
             color: white;
             text-align: center;
-            padding: 2rem;
+            padding: 3.5rem 5% 2rem;
+            font-size: 0.95rem;
         }
 
         @media (min-width: 768px) {
-            .hero { height: 100vh; }
-            .hero h1 { font-size: 5.5rem; }
-            .details-grid { grid-template-columns: repeat(2, 1fr); }
-            .nav-links { display: flex; flex-direction: row; position: static; width: auto; background: none; box-shadow: none; }
+            .hero { padding-top: 95px; }
+            .nav-links {
+                display: flex !important;
+                position: static;
+                width: auto;
+                background: transparent;
+                box-shadow: none;
+                gap: 2.8rem;
+            }
             .hamburger { display: none; }
-            section { padding: 8rem 5%; }
+            section { padding: 7.5rem 5% 8.5rem; }
+            .hero h1 { font-size: 7rem; }
+            .countdown span { font-size: 3.2rem; }
         }
     </style>
 </head>
 <body>
     <header>
         <nav>
-            <div class="logo">Lana & Mario</div>
+            <div class="logo">Mario & Lana</div>
             <div class="hamburger" onclick="toggleMenu()">
                 <div></div><div></div><div></div>
             </div>
@@ -199,28 +304,30 @@
                 <li><a href="#invitation">Invitation</a></li>
                 <li><a href="#details">Details</a></li>
                 <li><a href="#venues">Venues</a></li>
-                <li><a href="#rsvp">RSVP</a></li>
                 <li><a href="#honeymoon">Honeymoon Fund</a></li>
+                <li><a href="#rsvp">RSVP</a></li>
                 <li><a href="#faq">FAQ</a></li>
             </ul>
         </nav>
     </header>
 
     <section class="hero">
-        <h1>Lana & Mario</h1>
-        <p>11 April 2026 • Cape Town</p>
-        <div class="countdown">
-            <div><span id="days"></span>Days</div>
-            <div><span id="hours"></span>Hours</div>
-            <div><span id="minutes"></span>Minutes</div>
-            <div><span id="seconds"></span>Seconds</div>
+        <div class="hero-content">
+            <h1>Mario & Lana</h1>
+            <p>11 April 2026 • Cape Town</p>
+            <div class="countdown">
+                <div><span id="days"></span><small>Days</small></div>
+                <div><span id="hours"></span><small>Hours</small></div>
+                <div><span id="minutes"></span><small>Minutes</small></div>
+                <div><span id="seconds"></span><small>Seconds</small></div>
+            </div>
         </div>
     </section>
 
     <section id="invitation">
         <h2>You're Invited</h2>
         <div class="invitation">
-            <p>With hearts full of joy, we invite you to celebrate the union of Lana and Mario in a day filled with love, elegance, and unforgettable moments.</p>
+            <p>With hearts full of joy, we invite you to celebrate the union of Mario and Lana in a day filled with love, elegance, and unforgettable moments.</p>
             <p><strong>Date:</strong> 11 April 2026</p>
             <p><strong>Ceremony:</strong> St Paul's Anglican Church, 184 Bree Street, Cape Town | 15:45</p>
             <p><strong>Soirée:</strong> Just Shift, 54 Shortmarket Street, Cape Town | 17:00</p>
@@ -231,7 +338,7 @@
 
     <section id="details" style="background:#f9f9f9;">
         <h2>The Finer Details</h2>
-        <div class="details-grid">
+        <div style="display:grid;grid-template-columns:1fr;gap:2.5rem;max-width:860px;margin:0 auto;">
             <div class="detail-card">
                 <h3>Dress Code</h3>
                 <p><strong>Dolce Vita Black Tie</strong></p>
@@ -246,21 +353,38 @@
 
     <section id="venues">
         <h2>Our Venues</h2>
-        <div class="venue" style="margin-bottom:3rem;">
-            <h3>Ceremony • St Paul’s Anglican Church</h3>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3311.124!2d18.415!3d-33.9219!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc63af62b3c3c3%3A0x658c2b8d797a8972!2sSt%20Paul&#39;s%20Anglican%20Church!5e0!3m2!1sen!2sza" allowfullscreen loading="lazy"></iframe>
+        <div style="margin-bottom:5rem;">
+            <h3 style="text-align:center;margin-bottom:1.2rem;">Ceremony • St Paul’s Anglican Church<br>184 Bree Street, Cape Town</h3>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3311.124077698295!2d18.415032915217!3d-33.921869980642!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc63af62b3c3c3%3A0x658c2b8d797a8972!2sSt%20Paul&#39;s%20Anglican%20Church!5e0!3m2!1sen!2sza" allowfullscreen loading="lazy" style="width:100%;height:420px;"></iframe>
         </div>
-        <div class="venue">
-            <h3>Soirée • Just Shift</h3>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3311.04!2d18.417!3d-33.923!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc63b0!2s54%20Shortmarket%20St!5e0!3m2!1sen!2sza" allowfullscreen loading="lazy"></iframe>
+        <div>
+            <h3 style="text-align:center;margin-bottom:1.2rem;">Soirée • Just Shift<br>54 Shortmarket Street, Cape Town</h3>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3311.045!2d18.417123!3d-33.923456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc63b012345678%3A0xabcdef!2sJust%20Shift%2C%2054%20Shortmarket%20Street%2C%20Cape%20Town!5e0!3m2!1sen!2sza" allowfullscreen loading="lazy" style="width:100%;height:420px;"></iframe>
+        </div>
+    </section>
+
+    <section id="honeymoon">
+        <h2>Honeymoon Fund</h2>
+        <div class="invitation">
+            <p>Your love, laughter, and company on our wedding day is the greatest gift of all.<br><br>
+            But if you're considering a gift, we would be honored if you would contribute to our honeymoon fund instead. Then while we're relaxing on the beach or by the pool so blue, we'll sit back and know that it is truly thanks to YOU!</p>
+        </div>
+
+        <div class="bank-details">
+            <h3>Bank Details</h3>
+            <p><strong>Bank:</strong> FNB / RMB<br>
+               <strong>Account Holder:</strong> Lana Norton<br>
+               <strong>Account Type:</strong> FNB Account<br>
+               <strong>Account Number:</strong> 63002342367<br>
+               <strong>Branch Code:</strong> 250655</p>
+            <p style="margin-top:1.8rem;font-size:0.95rem;">Please use “Mario & Lana Honeymoon” as reference.</p>
         </div>
     </section>
 
     <section id="rsvp" style="background:#f9f9f9;">
         <h2>RSVP</h2>
-        <form action="https://formspree.io/f/your-form-id" method="POST">
+        <form action="https://formspree.io/f/your-form-id" method="POST" style="max-width:460px;margin:0 auto;">
             <label>Your Name: <input type="text" name="name" required></label>
-            <label>Number of Guests: <input type="number" name="guests" min="1" required></label>
             <label>Attending? 
                 <select name="attending" required>
                     <option value="yes">Yes, with pleasure!</option>
@@ -271,49 +395,36 @@
         </form>
     </section>
 
-    <section id="honeymoon">
-        <h2>Honeymoon Fund</h2>
-        <div class="invitation">
-            <p>Your love and laughter on our day is the greatest gift.<br>
-            But if you’d like to contribute to our honeymoon, we would be so grateful.</p>
-        </div>
-        <form id="donation-form">
-            <label>First Name: <input type="text" id="name_first" required></label>
-            <label>Last Name: <input type="text" id="name_last" required></label>
-            <label>Email: <input type="email" id="email" required></label>
-            <label>Donation (ZAR): <input type="number" id="amount" min="50" step="10" required></label>
-            <button type="submit">Donate Securely via PayFast</button>
-        </form>
-        <p style="text-align:center;margin-top:1rem;">Or bank transfer: [Insert your bank details here]</p>
-    </section>
-
     <section id="faq" style="background:#f9f9f9;">
         <h2>FAQ</h2>
-        <div class="faq-item" style="margin-bottom:2rem;">
-            <h4>Gift Registry</h4>
-            <p>Yuppiechef & Woolworths – search “Lana & Mario”</p>
-        </div>
-        <div class="faq-item" style="margin-bottom:2rem;">
-            <h4>Dietary Options</h4>
-            <p>Everything on the menu is halaal. Vegan options available on request.</p>
-        </div>
-        <div class="faq-item">
-            <h4>Parking</h4>
-            <p>Street parking available at both venues.</p>
+        <div style="max-width:720px;margin:0 auto;">
+            <div style="margin-bottom:2.8rem;">
+                <h4 style="font-family:var(--font-primary);margin-bottom:0.7rem;">Gift Registry</h4>
+                <p><strong>Yuppiechef:</strong> <a href="https://yuppiechef.com/yc9436095" target="_blank" style="color:#d4af37;text-decoration:underline;">yuppiechef.com/yc9436095</a></p>
+            </div>
+            <div style="margin-bottom:2.8rem;">
+                <h4 style="font-family:var(--font-primary);margin-bottom:0.7rem;">Dietary Options</h4>
+                <p>Everything on the menu is halaal. Vegan options available on request.</p>
+            </div>
+            <div>
+                <h4 style="font-family:var(--font-primary);margin-bottom:0.7rem;">Parking</h4>
+                <p>Street parking available at both venues.</p>
+            </div>
         </div>
     </section>
 
     <footer>
-        <p>© 2026 Lana & Mario • Cape Town</p>
-        <p>Scan the QR code on your invitation to visit this site</p>
+        <p>© 2026 Mario & Lana • Cape Town</p>
     </footer>
 
     <script>
         function toggleMenu() {
-            document.querySelector('.nav-links').classList.toggle('active');
+            const ham = document.querySelector('.hamburger');
+            const nav = document.querySelector('.nav-links');
+            ham.classList.toggle('active');
+            nav.classList.toggle('active');
         }
 
-        // Countdown
         const weddingDate = new Date('2026-04-11T15:45:00');
         function updateCountdown() {
             const diff = weddingDate - new Date();
@@ -326,30 +437,21 @@
         }
         setInterval(updateCountdown, 1000);
 
-        // Smooth scroll + close mobile menu
         document.querySelectorAll('a[href^="#"]').forEach(a => {
             a.addEventListener('click', e => {
                 e.preventDefault();
                 document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
                 document.querySelector('.nav-links').classList.remove('active');
+                document.querySelector('.hamburger').classList.remove('active');
             });
         });
 
-        // Fade-in on scroll
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) entry.target.classList.add('visible');
             });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.12 });
         document.querySelectorAll('section').forEach(s => observer.observe(s));
-
-        // PayFast (sandbox – replace IDs later)
-        document.getElementById('donation-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const data = { /* same as previous version */ };
-            // ... (full PayFast code from previous version – unchanged)
-            alert("In live version this opens PayFast securely. Replace placeholders with your real merchant details.");
-        });
     </script>
 </body>
 </html>
