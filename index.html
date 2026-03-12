@@ -10,25 +10,25 @@
             --primary: #1a1a1a;
             --accent: #d4af37;
             --light: #f8f6f3;
-            --font-serif: 'Playfair Display', serif;
-            --font-display: 'Cinzel', serif;
+            --serif: 'Playfair Display', serif;
+            --display: 'Cinzel', serif;
         }
 
         * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Lato', sans-serif;
             color: var(--primary);
             background: var(--light);
             line-height: 1.75;
-            overflow-x: hidden;
         }
 
         header {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(255,255,255,0.96);
+            background: rgba(255,255,255,0.97);
             backdrop-filter: blur(16px);
             z-index: 9999;
             box-shadow: 0 4px 25px rgba(0,0,0,0.08);
@@ -37,15 +37,15 @@
         nav {
             max-width: 1280px;
             margin: 0 auto;
-            padding: 1.4rem 5%;
+            padding: 1.5rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
-            font-family: var(--font-display);
-            font-size: 1.55rem;
+            font-family: var(--display);
+            font-size: 1.6rem;
             letter-spacing: 3px;
             color: var(--primary);
         }
@@ -53,7 +53,6 @@
         .hamburger {
             display: block;
             cursor: pointer;
-            z-index: 1100;
         }
         .hamburger div {
             width: 28px;
@@ -76,27 +75,27 @@
             padding: 2rem 5%;
             flex-direction: column;
             box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+            list-style: none;
         }
         .nav-links.active { display: flex; }
 
         .nav-links a {
-            font-family: var(--font-display);
+            font-family: var(--display);
             font-size: 1.05rem;
             text-transform: uppercase;
             letter-spacing: 2px;
             padding: 1rem 0;
             color: var(--primary);
             text-decoration: none;
-            transition: color 0.3s;
         }
         .nav-links a:hover { color: var(--accent); }
 
         section {
-            padding: 5.5rem 5% 7rem;
+            padding: 6rem 5% 7rem;
             max-width: 1280px;
             margin: 0 auto;
             opacity: 0;
-            transform: translateY(40px);
+            transform: translateY(50px);
             transition: all 1.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
         section.visible { opacity: 1; transform: translateY(0); }
@@ -104,7 +103,7 @@
         .hero {
             height: 100vh;
             min-height: 680px;
-            background: url('save-the-date-hero.jpg') no-repeat center 28% / cover;
+            background: url('save-the-date-hero.jpg') no-repeat center 22% / cover;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -116,7 +115,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.28) 20%, rgba(0,0,0,0.55) 68%);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.25) 15%, rgba(0,0,0,0.52) 70%);
             z-index: 1;
         }
 
@@ -128,100 +127,72 @@
         }
 
         .hero h1 {
-            font-family: var(--font-serif);
-            font-size: clamp(3.2rem, 8vw, 6.8rem);
-            line-height: 1.02;
+            font-family: var(--serif);
+            font-size: clamp(3.4rem, 9vw, 7.2rem);
+            line-height: 1;
             color: white;
-            text-shadow: 0 4px 25px rgba(0,0,0,0.65);
-            margin-bottom: 0.8rem;
+            text-shadow: 0 6px 30px rgba(0,0,0,0.7);
         }
 
         .hero p {
-            font-size: 1.45rem;
+            font-size: 1.5rem;
             color: white;
+            margin-top: 0.8rem;
             font-weight: 300;
-            text-shadow: 0 2px 12px rgba(0,0,0,0.5);
         }
 
         .countdown {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 2rem;
-            margin-top: 2.8rem;
-        }
-        .countdown div {
-            text-align: center;
-            min-width: 78px;
+            gap: 2.2rem;
+            margin-top: 3rem;
         }
         .countdown span {
-            font-family: var(--font-display);
-            font-size: 2.65rem;
-            display: block;
+            font-family: var(--display);
+            font-size: 2.8rem;
             color: white;
-            line-height: 1;
+            display: block;
         }
         .countdown small {
-            font-size: 0.88rem;
-            color: rgba(255,255,255,0.85);
-            display: block;
-            margin-top: 4px;
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.9);
         }
 
         h2 {
-            font-family: var(--font-serif);
-            font-size: 2.65rem;
+            font-family: var(--serif);
+            font-size: 2.7rem;
             text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
+            margin-bottom: 3.2rem;
         }
         h2::after {
             content: '';
-            position: absolute;
-            bottom: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 68px;
+            display: block;
+            width: 72px;
             height: 1.5px;
             background: var(--accent);
+            margin: 1rem auto 0;
         }
 
-        .invitation {
-            text-align: center;
-            max-width: 740px;
-            margin: 0 auto;
-            line-height: 1.9;
-        }
         .invitation p {
             margin-bottom: 2.6rem;
             font-size: 1.18rem;
         }
-        .invitation p:last-child { margin-bottom: 0; }
 
         .bank-details {
             background: white;
-            padding: 3rem 2.2rem;
-            border-radius: 16px;
-            box-shadow: 0 12px 40px rgba(0,0,0,0.07);
+            padding: 3rem 2rem;
+            border-radius: 18px;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.07);
             max-width: 520px;
             margin: 3rem auto 0;
-        }
-        .bank-details h3 {
-            font-family: var(--font-display);
-            font-size: 1.95rem;
-            margin-bottom: 1.4rem;
-            color: var(--primary);
         }
 
         form {
             max-width: 460px;
             margin: 0 auto;
         }
-        label {
-            display: block;
-            margin-bottom: 0.6rem;
-            font-weight: 400;
-        }
+        label { display: block; margin-bottom: 0.6rem; font-weight: 400; }
         input, select {
             width: 100%;
             padding: 1rem 1.2rem;
@@ -229,13 +200,7 @@
             border-radius: 6px;
             font-size: 1rem;
             margin-bottom: 1.6rem;
-            transition: border 0.3s;
         }
-        input:focus, select:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-
         button {
             background: var(--accent);
             color: white;
@@ -247,7 +212,6 @@
             border-radius: 6px;
             cursor: pointer;
             transition: all 0.3s ease;
-            letter-spacing: 0.5px;
         }
         button:hover {
             background: #b38f2e;
@@ -266,30 +230,32 @@
         iframe {
             border-radius: 16px;
             box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+            width: 100%;
+            height: 420px;
         }
 
         footer {
             background: var(--primary);
             color: white;
             text-align: center;
-            padding: 3.5rem 5% 2rem;
-            font-size: 0.95rem;
+            padding: 3.5rem 5%;
         }
 
         @media (min-width: 768px) {
-            .hero { padding-top: 95px; }
             .nav-links {
                 display: flex !important;
                 position: static;
                 width: auto;
                 background: transparent;
                 box-shadow: none;
-                gap: 2.8rem;
+                flex-direction: row;
+                gap: 3rem;
+                padding: 0;
             }
             .hamburger { display: none; }
-            section { padding: 7.5rem 5% 8.5rem; }
+            .hero { padding-top: 95px; }
+            section { padding: 8rem 5% 9rem; }
             .hero h1 { font-size: 7rem; }
-            .countdown span { font-size: 3.2rem; }
         }
     </style>
 </head>
@@ -355,11 +321,11 @@
         <h2>Our Venues</h2>
         <div style="margin-bottom:5rem;">
             <h3 style="text-align:center;margin-bottom:1.2rem;">Ceremony • St Paul’s Anglican Church<br>184 Bree Street, Cape Town</h3>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3311.124077698295!2d18.415032915217!3d-33.921869980642!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc63af62b3c3c3%3A0x658c2b8d797a8972!2sSt%20Paul&#39;s%20Anglican%20Church!5e0!3m2!1sen!2sza" allowfullscreen loading="lazy" style="width:100%;height:420px;"></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3311.124077698295!2d18.415032915217!3d-33.921869980642!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc63af62b3c3c3%3A0x658c2b8d797a8972!2sSt%20Paul&#39;s%20Anglican%20Church!5e0!3m2!1sen!2sza" allowfullscreen loading="lazy"></iframe>
         </div>
         <div>
             <h3 style="text-align:center;margin-bottom:1.2rem;">Soirée • Just Shift<br>54 Shortmarket Street, Cape Town</h3>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3311.045!2d18.417123!3d-33.923456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc63b012345678%3A0xabcdef!2sJust%20Shift%2C%2054%20Shortmarket%20Street%2C%20Cape%20Town!5e0!3m2!1sen!2sza" allowfullscreen loading="lazy" style="width:100%;height:420px;"></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3311.045!2d18.417123!3d-33.923456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc63b012345678%3A0xabcdef!2sJust%20Shift%2C%2054%20Shortmarket%20Street%2C%20Cape%20Town!5e0!3m2!1sen!2sza" allowfullscreen loading="lazy"></iframe>
         </div>
     </section>
 
@@ -399,15 +365,15 @@
         <h2>FAQ</h2>
         <div style="max-width:720px;margin:0 auto;">
             <div style="margin-bottom:2.8rem;">
-                <h4 style="font-family:var(--font-primary);margin-bottom:0.7rem;">Gift Registry</h4>
+                <h4 style="font-family:var(--serif);margin-bottom:0.7rem;">Gift Registry</h4>
                 <p><strong>Yuppiechef:</strong> <a href="https://yuppiechef.com/yc9436095" target="_blank" style="color:#d4af37;text-decoration:underline;">yuppiechef.com/yc9436095</a></p>
             </div>
             <div style="margin-bottom:2.8rem;">
-                <h4 style="font-family:var(--font-primary);margin-bottom:0.7rem;">Dietary Options</h4>
+                <h4 style="font-family:var(--serif);margin-bottom:0.7rem;">Dietary Options</h4>
                 <p>Everything on the menu is halaal. Vegan options available on request.</p>
             </div>
             <div>
-                <h4 style="font-family:var(--font-primary);margin-bottom:0.7rem;">Parking</h4>
+                <h4 style="font-family:var(--serif);margin-bottom:0.7rem;">Parking</h4>
                 <p>Street parking available at both venues.</p>
             </div>
         </div>
