@@ -105,9 +105,10 @@
             min-height: 680px;
             background: url('save-the-date-hero.jpg') no-repeat center 22% / cover;
             display: flex;
-            align-items: center;
+            align-items: flex-end;
             justify-content: center;
             position: relative;
+            padding-bottom: 14rem;
             padding-top: 110px;
         }
 
@@ -115,7 +116,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.25) 15%, rgba(0,0,0,0.52) 70%);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.18) 30%, rgba(0,0,0,0.65) 85%);
             z-index: 1;
         }
 
@@ -132,12 +133,13 @@
             line-height: 1;
             color: white;
             text-shadow: 0 6px 30px rgba(0,0,0,0.7);
+            margin-bottom: 0.6rem;
         }
 
         .hero p {
             font-size: 1.5rem;
             color: white;
-            margin-top: 0.8rem;
+            margin-top: 0.4rem;
             font-weight: 300;
         }
 
@@ -146,7 +148,7 @@
             flex-wrap: wrap;
             justify-content: center;
             gap: 2.2rem;
-            margin-top: 3rem;
+            margin-top: 2.2rem;
         }
         .countdown span {
             font-family: var(--display);
@@ -253,7 +255,7 @@
                 padding: 0;
             }
             .hamburger { display: none; }
-            .hero { padding-top: 95px; }
+            .hero { padding-top: 95px; padding-bottom: 10rem; }
             section { padding: 8rem 5% 9rem; }
             .hero h1 { font-size: 7rem; }
         }
@@ -354,7 +356,7 @@
             <label>Attending? 
                 <select name="attending" required>
                     <option value="yes">Yes, with pleasure!</option>
-                    <option value="no">Sorry, we can't make it</option>
+                    <option value="no">Sorry, can't make it</option>
                 </select>
             </label>
             <button type="submit">Send RSVP</button>
@@ -367,6 +369,7 @@
             <div style="margin-bottom:2.8rem;">
                 <h4 style="font-family:var(--serif);margin-bottom:0.7rem;">Gift Registry</h4>
                 <p><strong>Yuppiechef:</strong> <a href="https://yuppiechef.com/yc9436095" target="_blank" style="color:#d4af37;text-decoration:underline;">yuppiechef.com/yc9436095</a></p>
+                <p><strong>Mr Price Home:</strong> Lana & Mario Pearce</p>
             </div>
             <div style="margin-bottom:2.8rem;">
                 <h4 style="font-family:var(--serif);margin-bottom:0.7rem;">Dietary Options</h4>
