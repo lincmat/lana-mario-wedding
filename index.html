@@ -103,12 +103,12 @@
         .hero {
             height: 100vh;
             min-height: 680px;
-            background: url('save-the-date-hero.jpg') no-repeat center 22% / cover;
+            background: url('save-the-date-hero.jpg') no-repeat center 18% / cover;
             display: flex;
             align-items: flex-end;
             justify-content: center;
             position: relative;
-            padding-bottom: 14rem;
+            padding-bottom: 18rem;   /* Text now sits cleanly below the faces */
             padding-top: 110px;
         }
 
@@ -116,7 +116,7 @@
             content: '';
             position: absolute;
             inset: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.18) 30%, rgba(0,0,0,0.65) 85%);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.18) 30%, rgba(0,0,0,0.68) 88%);
             z-index: 1;
         }
 
@@ -266,7 +266,7 @@
                 padding: 0;
             }
             .hamburger { display: none; }
-            .hero { padding-top: 95px; padding-bottom: 10rem; }
+            .hero { padding-top: 95px; padding-bottom: 12rem; }
             section { padding: 8rem 5% 9rem; }
             .hero h1 { font-size: 7rem; }
         }
@@ -436,25 +436,19 @@
         }, { threshold: 0.12 });
         document.querySelectorAll('section').forEach(s => observer.observe(s));
 
-        // === RSVP FORM → GOOGLE SHEETS ===
+        // RSVP → Google Sheet
         const form = document.getElementById('rsvp-form');
         const successMsg = document.getElementById('success-message');
 
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
-
             const formData = new FormData();
             formData.append('name', document.getElementById('name').value);
             formData.append('attending', document.getElementById('attending').value);
 
             try {
                 const scriptURL = 'https://script.google.com/macros/s/AKfycbxhCfzCwAdrbJFlsmd7BsNC7f_Us0zJRuwmsRrus4Q21KSz_UYz7P40C8FBkTKsWMRp/exec';
-
-                const response = await fetch(scriptURL, {
-                    method: 'POST',
-                    body: formData
-                });
-
+                const response = await fetch(scriptURL, { method: 'POST', body: formData });
                 if (response.ok) {
                     successMsg.style.display = 'block';
                     form.reset();
